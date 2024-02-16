@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "prisma:generate": "prisma generate",
     "dev": "next",
-    "build": "next build",
+    "build": "npm run prisma:generate && next build",
     "start": "next start"
   },
   "keywords": [],
