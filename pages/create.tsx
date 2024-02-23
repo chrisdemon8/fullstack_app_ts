@@ -6,24 +6,20 @@ import { useSession } from 'next-auth/react';
 const Draft: React.FC = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-
-
+  const session = useSession();
   const submitData = async (e: React.SyntheticEvent) => {
-    console.log('TEST', title, content);
-    console.log(useSession());
-    e.preventDefault();
-    try {
-      const body = { title, content };
-      console.log(JSON.stringify(body));
-      await fetch('/api/post', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      });
-      //await Router.push('/drafts');
-    } catch (error) {
-      console.error('TEST', error);
-    }
+      e.preventDefault();
+      try {
+          const body = { title, content, session };
+          await fetch('/api/post', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(body),
+          });
+          await Router.push('/drafts');
+      } catch (error) {
+          console.error(error);
+      }
   };
 
   return (
